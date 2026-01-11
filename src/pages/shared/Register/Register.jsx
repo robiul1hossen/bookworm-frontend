@@ -29,7 +29,7 @@ const Register = () => {
         password: data.password,
       };
       axios
-        .post("http://localhost:3000/user", userInfo)
+        .post("http://localhost:3000/user/signup", userInfo)
         .then((res) => {
           if (res.data.insertedId) {
             navigate(`${location?.state ? location?.state : "/"}`);

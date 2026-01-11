@@ -1,6 +1,9 @@
+import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
+import { toast } from "react-toastify";
+import { setToken } from "../../../lib/lib";
 
 const Login = () => {
   const {
@@ -8,9 +11,31 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const navigate = useNavigate();
+  const location = useLocation();
   const handleLogin = (data) => {
+    const userData = {
+      email: data.email,
+      password: data.password,
+    };
+    axios
+      .post("http://localhost:3000/user/login", userData)
+      .then((res) => {
+        console.log(res.data.token);
+        if (res.data.token) {
+          setToken(res.data.token);
+          alert("Login successful!");
+          navigate(`${location?.state ? location?.state : "/"}`);
+        } else {
+          toast.error("Login failed");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     console.log(data);
   };
+
   return (
     <div>
       <h2 className="text-2xl font-bold text-center mb-4">Login Now!</h2>
