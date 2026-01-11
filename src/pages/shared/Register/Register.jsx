@@ -1,21 +1,43 @@
+import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 
 const Register = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const handleRegister = (data) => {
-    const userInfo = {
-      name: data.name,
-      email: data.email,
-      photo: "photo",
-      password: data.password,
-    };
-    console.log(userInfo);
+    const profileImage = data.photo[0];
+    const formData = new FormData();
+    formData.append("image", profileImage);
+    const imageHostingURL = `https://api.imgbb.com/1/upload?key=${
+      import.meta.env.VITE_host_image
+    }`;
+    axios.post(imageHostingURL, formData).then((res) => {
+      const userPhotoURL = res.data?.data?.url;
+      console.log(userPhotoURL);
+
+      const userInfo = {
+        name: data.name,
+        email: data.email,
+        photoURL: userPhotoURL,
+        password: data.password,
+      };
+      axios
+        .post("http://localhost:3000/user", userInfo)
+        .then((res) => {
+          if (res.data.insertedId) {
+            navigate(`${location?.state ? location?.state : "/"}`);
+          }
+          console.log(res);
+        })
+        .catch((error) => console.log(error));
+    });
   };
   return (
     <div>
