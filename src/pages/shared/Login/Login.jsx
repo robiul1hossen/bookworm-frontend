@@ -21,10 +21,10 @@ const Login = () => {
     axios
       .post("http://localhost:3000/user/login", userData)
       .then((res) => {
-        console.log(res.data.token);
+        console.log(res.data);
         if (res.data.token) {
           setToken(res.data.token);
-          alert("Login successful!");
+          toast.success("Login successful!");
           navigate(`${location?.state ? location?.state : "/"}`);
         } else {
           toast.error("Login failed");

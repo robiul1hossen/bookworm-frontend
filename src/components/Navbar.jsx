@@ -1,6 +1,21 @@
 import { NavLink } from "react-router";
+import { useAuth } from "../hooks/useAuth";
+import axios from "axios";
 
 const Navbar = () => {
+  const { isAuthenticated, logout } = useAuth();
+  // if (isAuthenticated) {
+  //   axios
+  //     .get("http://localhost:3000/user")
+  //     .then((res) => {
+  //       console.log(res.data);
+  //     })
+  //     .catch((error) => console.log(error));
+  // }
+  // console.log(isAuthenticated);
+  const handleLogout = () => {
+    logout();
+  };
   const links = (
     <>
       <NavLink to="/">
@@ -13,26 +28,31 @@ const Navbar = () => {
         <li className="font-semibold mx-2">About</li>
       </NavLink>
 
-      <>
-        <NavLink to="/auth/login">
-          <li className="font-semibold mx-2">Logout</li>
-        </NavLink>
-        {/* <img
+      {isAuthenticated ? (
+        <>
+          <NavLink to="/auth/login">
+            <button onClick={handleLogout} className="font-semibold mx-2">
+              {" "}
+              Logout
+            </button>
+          </NavLink>
+          {/* <img
             src={user?.photoURL}
             alt=""
             className="w-8 h-8 rounded-full cursor-pointer"
             referrerPolicy="no-referrer"
           /> */}
-      </>
-
-      <>
-        <NavLink to="/auth/login">
-          <li className="font-semibold mx-2">Login</li>
-        </NavLink>
-        <NavLink to="/auth/register">
-          <li className="font-semibold mx-2">Register</li>
-        </NavLink>
-      </>
+        </>
+      ) : (
+        <>
+          <NavLink to="/auth/login">
+            <li className="font-semibold mx-2">Login</li>
+          </NavLink>
+          <NavLink to="/auth/register">
+            <li className="font-semibold mx-2">Register</li>
+          </NavLink>
+        </>
+      )}
     </>
   );
   return (
