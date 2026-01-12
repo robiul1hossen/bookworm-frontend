@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import axios from "axios";
+import { toast } from "react-toastify";
 
-const EditBook = () => {
-  const { id } = useParams();
+const CreateBook = () => {
   const axiosSecure = useAxiosSecure();
   const [allGenres, setAllGenres] = useState([]);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm();
+  const selectedGenres = watch("genres") || [];
 
-  const { data: book = {} } = useQuery({
-    queryKey: ["book", id],
-    queryFn: async () => {
-      const res = axiosSecure.get(`/books/${id}`);
-      return (await res).data;
-    },
-  });
   useEffect(() => {
     axiosSecure
       .get("/genres")
@@ -29,17 +28,7 @@ const EditBook = () => {
   }, [axiosSecure]);
   const newAllGenres = allGenres.map((genre) => genre.name);
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    reset,
-    formState: { errors },
-  } = useForm();
-  const selectedGenres = watch("genres") || [];
-  //   console.log(book);
-  const { title, author, description, price, year } = book;
-  const handleEdit = (data) => {
+  const handleAdd = (data) => {
     console.log(data);
     const profileImage = data.photo[0];
     const formData = new FormData();
@@ -63,32 +52,28 @@ const EditBook = () => {
       };
 
       axiosSecure
-        .patch(`/books/${id}`, bookData)
+        .post("/books", bookData)
         .then((res) => {
           console.log(res.data);
-          reset();
+          if (res.data.insertedId) {
+            toast.success("Book added to list.");
+          }
         })
-        .catch((error) => {
-          console.log(error);
-        });
+        .catch((error) => console.log(error));
     });
   };
-
   return (
     <div>
       <div>
-        <h2 className="text-2xl font-semibold text-center my-4">
-          Update {book.title}
-        </h2>
+        <h2 className="text-2xl font-semibold text-center my-4">Add a Book</h2>
       </div>
       <div className="flex items-center justify-center">
-        <form onSubmit={handleSubmit(handleEdit)}>
+        <form onSubmit={handleSubmit(handleAdd)}>
           <fieldset className="fieldset">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 px-4">
               <div className="w-full">
                 <label className="label">Title</label>
                 <input
-                  defaultValue={title}
                   {...register("title", { required: true })}
                   type="text"
                   className="input outline-none shadow-sm w-full"
@@ -103,7 +88,6 @@ const EditBook = () => {
               <div className="w-full">
                 <label className="label">Author</label>
                 <input
-                  defaultValue={author}
                   {...register("author", { required: true })}
                   type="text"
                   className="input outline-none shadow-sm w-full"
@@ -115,13 +99,12 @@ const EditBook = () => {
                   </span>
                 )}
               </div>
-              <div>
+              <div className="">
                 <label className="label">Description</label>
                 <input
-                  defaultValue={description}
                   {...register("description", { required: true })}
                   type="text"
-                  className="input outline-none shadow-sm"
+                  className="input outline-none shadow-sm w-full"
                   placeholder="Type here"
                 />
                 {errors.description && (
@@ -133,10 +116,9 @@ const EditBook = () => {
               <div>
                 <label className="label">Price</label>
                 <input
-                  defaultValue={price}
                   {...register("price", { required: true })}
                   type="text"
-                  className="input outline-none shadow-sm"
+                  className="input outline-none shadow-sm w-full"
                   placeholder="Type here"
                 />
                 {errors.price && (
@@ -148,10 +130,9 @@ const EditBook = () => {
               <div>
                 <label className="label">Year</label>
                 <input
-                  defaultValue={year}
                   {...register("year", { required: true })}
                   type="text"
-                  className="input outline-none shadow-sm"
+                  className="input outline-none shadow-sm w-full"
                   placeholder="Type here"
                 />
                 {errors.year && (
@@ -163,7 +144,7 @@ const EditBook = () => {
                 <input
                   type="file"
                   {...register("photo", { required: true })}
-                  className="file-input file-input-primary outline-none shadow-sm "
+                  className="file-input file-input-primary outline-none shadow-sm w-full"
                 />
                 {errors.photo && (
                   <span className="text-xs text-red-500">
@@ -175,7 +156,7 @@ const EditBook = () => {
           </fieldset>
           <div>
             <p className="px-4 textarea-sm">Select Genres</p>
-            <div className="grid grid-cols-2 gap-2 px-4">
+            <div className="grid grid-cols-2 gap-2 px-4 w-full">
               {newAllGenres.map((genre, i) => (
                 <label className="label" key={i}>
                   <input
@@ -203,7 +184,7 @@ const EditBook = () => {
             </div>
           </div>
           <div className="px-4 mt-6">
-            <button className="btn btn-primary">Edit Book Details</button>
+            <button className="btn btn-primary">Add A Book</button>
           </div>
         </form>
       </div>
@@ -211,4 +192,4 @@ const EditBook = () => {
   );
 };
 
-export default EditBook;
+export default CreateBook;

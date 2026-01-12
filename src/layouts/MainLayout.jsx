@@ -1,4 +1,3 @@
-import React from "react";
 import { NavLink, Outlet } from "react-router";
 import { BiSolidCategory } from "react-icons/bi";
 import { IoBookSharp } from "react-icons/io5";
@@ -62,17 +61,50 @@ const MainLayout = () => {
                 </button>
               </NavLink>
             </li>
-            <li>
-              <NavLink to="/admin/manage-books">
-                <button
-                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                  data-tip="Manage Books">
-                  <span className="flex items-center justify-center gap-1">
+
+            <li className="">
+              <div className="collapse collapse-arrow bg-base-200 rounded-none">
+                <input type="checkbox" />
+
+                {/* Parent Menu */}
+                <div className="collapse-title p-0">
+                  <NavLink
+                    to="/admin/manage-books"
+                    className="flex items-center gap-2  py-2 w-full">
                     <IoBookSharp size={16} />
                     <span className="is-drawer-close:hidden">Manage Books</span>
-                  </span>
-                </button>
-              </NavLink>
+                  </NavLink>
+                </div>
+
+                {/* Sub Menu */}
+                <div className="collapse-content p-0">
+                  <ul className="ml-4 space-y-1">
+                    <li>
+                      <NavLink
+                        to="/admin/manage-books"
+                        className="block px-3 py-1 text-sm hover:text-primary">
+                        📚 All Books
+                      </NavLink>
+                    </li>
+
+                    <li>
+                      <NavLink
+                        to="/admin/manage-books/create"
+                        className="block px-3 py-1 text-sm hover:text-primary">
+                        ➕ Create Book
+                      </NavLink>
+                    </li>
+
+                    <li>
+                      <NavLink
+                        to="/admin/manage-books/drafts"
+                        className="block px-3 py-1 text-sm hover:text-primary">
+                        📝 Draft Books
+                      </NavLink>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </li>
 
             {/* List item */}
