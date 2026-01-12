@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 const ManageGenres = () => {
   const axiosSecure = useAxiosSecure();
@@ -11,6 +13,11 @@ const ManageGenres = () => {
       return res.data;
     },
   });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const handleDelete = async (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -34,8 +41,37 @@ const ManageGenres = () => {
       }
     });
   };
+  const handleAddGenre = (data) => {
+    console.log(data);
+    axiosSecure
+      .post("/genres", data)
+      .then((res) => {
+        if (res.data.insertedId) {
+          toast.success("Genre added to list.");
+          refetch();
+        }
+      })
+      .catch((error) => console.log(error));
+  };
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
+      <div className="justify-items-end ">
+        <form onSubmit={handleSubmit(handleAddGenre)} className="flex gap-2">
+          <div className="w-full md:w-1/2">
+            <input
+              {...register("name", { required: true })}
+              type="text"
+              className="input outline-none w-full px-2"
+            />
+            {errors.name && (
+              <span className="text-xs text-red-500">Genre is required</span>
+            )}
+          </div>
+          <div>
+            <button className="btn btn-primary">Add Genre</button>
+          </div>
+        </form>
+      </div>
       {/* table */}
       <div className="overflow-x-auto">
         <table className="table table-zebra">

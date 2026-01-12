@@ -66,17 +66,15 @@ const MainLayout = () => {
               <div className="collapse collapse-arrow bg-base-200 rounded-none">
                 <input type="checkbox" />
 
-                {/* Parent Menu */}
                 <div className="collapse-title p-0">
                   <NavLink
                     to="/admin/manage-books"
-                    className="flex items-center gap-2  py-2 w-full">
+                    className="flex items-center gap-2 w-full">
                     <IoBookSharp size={16} />
                     <span className="is-drawer-close:hidden">Manage Books</span>
                   </NavLink>
                 </div>
 
-                {/* Sub Menu */}
                 <div className="collapse-content p-0">
                   <ul className="ml-4 space-y-1">
                     <li>
