@@ -18,6 +18,9 @@ const Navbar = () => {
       <NavLink to="/about">
         <li className="font-semibold mx-2">About</li>
       </NavLink>
+      <NavLink to="/admin/genres">
+        <li className="font-semibold mx-2">genres</li>
+      </NavLink>
 
       {isAuthenticated ? (
         <>

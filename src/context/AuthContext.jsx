@@ -22,11 +22,11 @@ const AuthProvider = ({ children }) => {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log(res.data);
         setUser(res.data.user);
       } catch (err) {
         removeToken();
         setUser(null);
+        console.log(err);
         setTokenState(null);
       } finally {
         setLoading(false);

@@ -1,9 +1,10 @@
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router";
 import { useAuth } from "../../../hooks/useAuth";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 const Login = () => {
   const { login } = useAuth();
+  const axiosSecure = useAxiosSecure();
   const {
     register,
     handleSubmit,
@@ -16,11 +17,11 @@ const Login = () => {
       email: data.email,
       password: data.password,
     };
-    const res = await axios.post("http://localhost:3000/user/login", userData);
+    const res = await axiosSecure.post("/user/login", userData);
     login(res.data.token, res.data.user);
     console.log(res.data.user.id);
     if (res.data.user.id) {
-      navigate(`${location?.state ? location?.state : "/"}`);
+      navigate(`${location?.state?.from ? location?.state?.from : "/"}`);
     }
   };
 

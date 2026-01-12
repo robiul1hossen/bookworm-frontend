@@ -3,10 +3,13 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router";
 import { setToken } from "../../../lib/lib";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const Register = () => {
+  const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const location = useLocation();
+
   const {
     register,
     handleSubmit,
@@ -29,13 +32,13 @@ const Register = () => {
         photoURL: userPhotoURL,
         password: data.password,
       };
-      axios
-        .post("http://localhost:3000/user/signup", userInfo)
+      axiosSecure
+        .post("/user/signup", userInfo)
         .then((res) => {
           console.log(res.data);
           if (res.data.user.id) {
             setToken(res.data.token);
-            navigate(`${location?.state ? location?.state : "/"}`);
+            navigate(`${location?.state?.from ? location?.state?.from : "/"}`);
           }
           console.log(res);
         })
