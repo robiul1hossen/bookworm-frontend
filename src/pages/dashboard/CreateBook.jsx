@@ -54,8 +54,8 @@ const CreateBook = () => {
       axiosSecure
         .post("/books", bookData)
         .then((res) => {
-          console.log(res.data);
           if (res.data.insertedId) {
+            reset();
             toast.success("Book added to list.");
           }
         })
