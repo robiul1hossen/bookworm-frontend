@@ -1,10 +1,11 @@
 import { createBrowserRouter } from "react-router";
-import MainLayout from "../layouts/MainLayout";
+import MainLayout from "../layouts/MainLayout.jsx";
 import AuthLayout from "../layouts/AuthLayout";
 import Login from "../pages/shared/Login/Login";
 import Register from "../pages/shared/register/register";
 import ManageGenres from "../pages/dashboard/ManageGenres";
 import PrivateRoute from "./PrivateRoute";
+import ManageBooks from "../pages/dashboard/ManageBooks.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -16,8 +17,12 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
-        path: "admin/genres",
+        path: "admin/manage-genres",
         element: <ManageGenres />,
+      },
+      {
+        path: "/admin/manage-books",
+        element: <ManageBooks />,
       },
     ],
   },
