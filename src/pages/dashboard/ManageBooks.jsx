@@ -1,6 +1,8 @@
 import React from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
+import { Link } from "react-router";
 
 const ManageBooks = () => {
   const axiosSecure = useAxiosSecure();
@@ -11,7 +13,6 @@ const ManageBooks = () => {
       return res.data;
     },
   });
-  console.log(books);
   return (
     <div className="overflow-x-auto">
       <table className="table table-zebra">
@@ -34,12 +35,24 @@ const ManageBooks = () => {
               <td>{book.title}</td>
               <td>{book.author}</td>
               <td>
-                {book.genres.map((g) => (
-                  <p>{g}</p>
+                {book.genres.map((g, i) => (
+                  <p key={i}>{g}</p>
                 ))}
               </td>
               <td></td>
-              <td>actions</td>
+              <td>
+                <Link to={`/admin/update/${book._id}`}>
+                  <button className="btn btn-xs px-2">
+                    <FaEdit size={14} />
+                  </button>
+                </Link>
+                <button className="btn btn-xs px-2">
+                  <FaTrash size={14} />
+                </button>
+                <button className="btn btn-xs px-2">
+                  <FaEye size={14} />
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>

@@ -6,6 +6,7 @@ import Register from "../pages/shared/register/register";
 import ManageGenres from "../pages/dashboard/ManageGenres";
 import PrivateRoute from "./PrivateRoute";
 import ManageBooks from "../pages/dashboard/ManageBooks.jsx";
+import EditBook from "../pages/dashboard/EditBook.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ export const router = createBrowserRouter([
       {
         path: "/admin/manage-books",
         element: <ManageBooks />,
+      },
+      {
+        path: `/admin/update/:id`,
+        element: <EditBook />,
       },
     ],
   },

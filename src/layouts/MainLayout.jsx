@@ -1,5 +1,10 @@
 import React from "react";
 import { NavLink, Outlet } from "react-router";
+import { BiSolidCategory } from "react-icons/bi";
+import { IoBookSharp } from "react-icons/io5";
+import { MdReviews } from "react-icons/md";
+import { FaHome, FaUsers, FaVideo } from "react-icons/fa";
+import { TbLayoutSidebarRightCollapseFilled } from "react-icons/tb";
 
 const MainLayout = () => {
   return (
@@ -13,19 +18,7 @@ const MainLayout = () => {
             aria-label="open sidebar"
             className="btn btn-square btn-ghost">
             {/* Sidebar toggle icon */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              strokeLinejoin="round"
-              strokeLinecap="round"
-              strokeWidth="2"
-              fill="none"
-              stroke="currentColor"
-              className="my-1.5 inline-block size-4">
-              <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
-              <path d="M9 4v16"></path>
-              <path d="M14 10l2 2l-2 2"></path>
-            </svg>
+            <TbLayoutSidebarRightCollapseFilled size={20} />
           </label>
           <div className="px-4 font-bold text-2xl">BOOKWORM</div>
         </nav>
@@ -48,19 +41,10 @@ const MainLayout = () => {
                   className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                   data-tip="Homepage">
                   {/* Home icon */}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    strokeLinejoin="round"
-                    strokeLinecap="round"
-                    strokeWidth="2"
-                    fill="none"
-                    stroke="currentColor"
-                    className="my-1.5 inline-block size-4">
-                    <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
-                    <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                  </svg>
-                  <span className="is-drawer-close:hidden">Homepage</span>
+                  <span className="flex items-center justify-center gap-1">
+                    <FaHome size={16} />
+                    <span className="is-drawer-close:hidden">Homepage</span>
+                  </span>
                 </button>
               </NavLink>
             </li>
@@ -69,20 +53,12 @@ const MainLayout = () => {
                 <button
                   className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                   data-tip="Manage Genres">
-                  {/* Home icon */}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    strokeLinejoin="round"
-                    strokeLinecap="round"
-                    strokeWidth="2"
-                    fill="none"
-                    stroke="currentColor"
-                    className="my-1.5 inline-block size-4">
-                    <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
-                    <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                  </svg>
-                  <span className="is-drawer-close:hidden">Manage Genres</span>
+                  <span className="flex items-center justify-center gap-1">
+                    <BiSolidCategory size={16} />
+                    <span className="is-drawer-close:hidden">
+                      Manage Genres
+                    </span>
+                  </span>
                 </button>
               </NavLink>
             </li>
@@ -91,20 +67,10 @@ const MainLayout = () => {
                 <button
                   className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                   data-tip="Manage Books">
-                  {/* Home icon */}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    strokeLinejoin="round"
-                    strokeLinecap="round"
-                    strokeWidth="2"
-                    fill="none"
-                    stroke="currentColor"
-                    className="my-1.5 inline-block size-4">
-                    <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
-                    <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                  </svg>
-                  <span className="is-drawer-close:hidden"> Manage Books</span>
+                  <span className="flex items-center justify-center gap-1">
+                    <IoBookSharp size={16} />
+                    <span className="is-drawer-close:hidden">Manage Books</span>
+                  </span>
                 </button>
               </NavLink>
             </li>
@@ -115,22 +81,11 @@ const MainLayout = () => {
                 <button
                   className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                   data-tip="Moderate Reviews">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    strokeLinejoin="round"
-                    strokeLinecap="round"
-                    strokeWidth="2"
-                    fill="none"
-                    stroke="currentColor"
-                    className="my-1.5 inline-block size-4">
-                    <path d="M20 7h-9"></path>
-                    <path d="M14 17H5"></path>
-                    <circle cx="17" cy="17" r="3"></circle>
-                    <circle cx="7" cy="7" r="3"></circle>
-                  </svg>
-                  <span className="is-drawer-close:hidden">
-                    Moderate Reviews
+                  <span className="flex items-center justify-center gap-1">
+                    <MdReviews size={16} />
+                    <span className="is-drawer-close:hidden">
+                      Moderate Reviews
+                    </span>
                   </span>
                 </button>
               </NavLink>
@@ -140,22 +95,11 @@ const MainLayout = () => {
                 <button
                   className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                   data-tip="Manage Tutorials">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    strokeLinejoin="round"
-                    strokeLinecap="round"
-                    strokeWidth="2"
-                    fill="none"
-                    stroke="currentColor"
-                    className="my-1.5 inline-block size-4">
-                    <path d="M20 7h-9"></path>
-                    <path d="M14 17H5"></path>
-                    <circle cx="17" cy="17" r="3"></circle>
-                    <circle cx="7" cy="7" r="3"></circle>
-                  </svg>
-                  <span className="is-drawer-close:hidden">
-                    Manage Tutorials
+                  <span className="flex items-center justify-center gap-1">
+                    <FaVideo size={16} />
+                    <span className="is-drawer-close:hidden">
+                      Manage Tutorials
+                    </span>
                   </span>
                 </button>
               </NavLink>
@@ -165,21 +109,10 @@ const MainLayout = () => {
                 <button
                   className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                   data-tip="User Management">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    strokeLinejoin="round"
-                    strokeLinecap="round"
-                    strokeWidth="2"
-                    fill="none"
-                    stroke="currentColor"
-                    className="my-1.5 inline-block size-4">
-                    <path d="M20 7h-9"></path>
-                    <path d="M14 17H5"></path>
-                    <circle cx="17" cy="17" r="3"></circle>
-                    <circle cx="7" cy="7" r="3"></circle>
-                  </svg>
-                  <span className="is-drawer-close:hidden">Manage Users</span>
+                  <span className="flex items-center justify-center gap-1">
+                    <FaUsers size={16} />
+                    <span className="is-drawer-close:hidden">Manage Users</span>
+                  </span>
                 </button>
               </NavLink>
             </li>
