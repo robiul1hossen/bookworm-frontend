@@ -6,8 +6,7 @@ import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 const AuthLayout = () => {
   return (
     <>
-      <Navbar />
-      <div className="flex flex-col-reverse md:flex-row justify-center items-center max-w-11/12 mx-auto ">
+      <div className="flex flex-col-reverse md:flex-row justify-center items-center min-h-screen mx-auto ">
         <div className="w-full">
           <Outlet />
         </div>

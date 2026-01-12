@@ -8,6 +8,7 @@ import PrivateRoute from "./PrivateRoute";
 import ManageBooks from "../pages/dashboard/ManageBooks.jsx";
 import EditBook from "../pages/dashboard/EditBook.jsx";
 import CreateBook from "../pages/dashboard/CreateBook.jsx";
+import ManageUsers from "../pages/dashboard/ManageUsers.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ export const router = createBrowserRouter([
       {
         path: "admin/manage-books/create",
         element: <CreateBook />,
+      },
+      {
+        path: "admin/manage-users",
+        element: <ManageUsers />,
       },
     ],
   },

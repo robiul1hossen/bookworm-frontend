@@ -57,8 +57,8 @@ const ManageGenres = () => {
       .catch((error) => console.log(error));
   };
   const handleEditGenre = (genre) => {
-    setSelectedGenre(genre);
     editGenreModalRef.current.showModal();
+    setSelectedGenre(genre);
   };
   console.log(selectGenre);
   const handleUpdateGenre = (data) => {
@@ -69,7 +69,7 @@ const ManageGenres = () => {
         console.log(res.data);
         if (res.data.modifiedCount) {
           toast.success("Genre updated!");
-          editGenreModalRef.current.close();
+          editGenreModalRef?.current?.close();
         }
         reset();
       })
@@ -135,12 +135,7 @@ const ManageGenres = () => {
           </tbody>
         </table>
       </div>
-      {/* Open the modal using document.getElementById('ID').showModal() method */}
-      <button
-        className="btn"
-        onClick={() => document.getElementById("my_modal_5").showModal()}>
-        open modal
-      </button>
+
       <dialog
         ref={editGenreModalRef}
         className="modal modal-bottom sm:modal-middle">
@@ -153,7 +148,7 @@ const ManageGenres = () => {
               <div className="w-full md:w-1/2">
                 <input
                   {...register("name", { required: true })}
-                  defaultValue={"selectGenre?.name"}
+                  defaultValue={selectGenre?.name}
                   type="text"
                   placeholder="Type Genre"
                   className="input outline-none w-full px-2"
