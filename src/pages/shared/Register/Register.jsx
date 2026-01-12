@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router";
+import { setToken } from "../../../lib/lib";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -31,7 +32,9 @@ const Register = () => {
       axios
         .post("http://localhost:3000/user/signup", userInfo)
         .then((res) => {
-          if (res.data.insertedId) {
+          console.log(res.data);
+          if (res.data.user.id) {
+            setToken(res.data.token);
             navigate(`${location?.state ? location?.state : "/"}`);
           }
           console.log(res);

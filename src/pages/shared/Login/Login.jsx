@@ -1,11 +1,9 @@
 import axios from "axios";
-import React from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router";
-import { toast } from "react-toastify";
-import { setToken } from "../../../lib/lib";
-
+import { useAuth } from "../../../hooks/useAuth";
 const Login = () => {
+  const { login } = useAuth();
   const {
     register,
     handleSubmit,
@@ -13,27 +11,17 @@ const Login = () => {
   } = useForm();
   const navigate = useNavigate();
   const location = useLocation();
-  const handleLogin = (data) => {
+  const handleLogin = async (data) => {
     const userData = {
       email: data.email,
       password: data.password,
     };
-    axios
-      .post("http://localhost:3000/user/login", userData)
-      .then((res) => {
-        console.log(res.data);
-        if (res.data.token) {
-          setToken(res.data.token);
-          toast.success("Login successful!");
-          navigate(`${location?.state ? location?.state : "/"}`);
-        } else {
-          toast.error("Login failed");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    console.log(data);
+    const res = await axios.post("http://localhost:3000/user/login", userData);
+    login(res.data.token, res.data.user);
+    console.log(res.data.user.id);
+    if (res.data.user.id) {
+      navigate(`${location?.state ? location?.state : "/"}`);
+    }
   };
 
   return (

@@ -1,18 +1,9 @@
 import { NavLink } from "react-router";
 import { useAuth } from "../hooks/useAuth";
-import axios from "axios";
 
 const Navbar = () => {
-  const { isAuthenticated, logout } = useAuth();
-  // if (isAuthenticated) {
-  //   axios
-  //     .get("http://localhost:3000/user")
-  //     .then((res) => {
-  //       console.log(res.data);
-  //     })
-  //     .catch((error) => console.log(error));
-  // }
-  // console.log(isAuthenticated);
+  const { isAuthenticated, logout, user } = useAuth();
+
   const handleLogout = () => {
     logout();
   };
@@ -36,12 +27,12 @@ const Navbar = () => {
               Logout
             </button>
           </NavLink>
-          {/* <img
+          <img
             src={user?.photoURL}
             alt=""
             className="w-8 h-8 rounded-full cursor-pointer"
             referrerPolicy="no-referrer"
-          /> */}
+          />
         </>
       ) : (
         <>
