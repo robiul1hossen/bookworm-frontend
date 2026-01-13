@@ -188,7 +188,7 @@ const MainLayout = () => {
                 </li>
               </>
             ) : (
-              <div>
+              <div className="flex flex-col items-start justify-start">
                 <NavLink to="/user/browse-book" className="cursor-pointer">
                   <button
                     className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
@@ -203,7 +203,7 @@ const MainLayout = () => {
                 </NavLink>
                 <NavLink to="/user/my-library" className="cursor-pointer">
                   <button
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right cursor-pointer"
                     data-tip="My Library">
                     <span className="flex items-center justify-center gap-1">
                       <FaUsers size={16} />

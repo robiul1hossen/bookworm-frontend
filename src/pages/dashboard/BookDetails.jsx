@@ -3,6 +3,9 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useParams } from "react-router";
 import { useAuth } from "../../hooks/useAuth";
 import { toast } from "react-toastify";
+import Rating from "react-rating";
+import { CiStar } from "react-icons/ci";
+import { FaStar } from "react-icons/fa";
 
 const BookDetails = () => {
   const { id } = useParams();
@@ -15,18 +18,53 @@ const BookDetails = () => {
       return res.data;
     },
   });
+  console.log(book);
 
-  const handleAddToShelf = async () => {
+  const handleWantToRead = async () => {
     const bookDetails = {
       bookId: id,
       username: user.name,
       email: user.email,
     };
     await axiosSecure
-      .post(`/shelf/add-to-read`, bookDetails)
+      .post(`/shelf/want-to-read`, bookDetails)
       .then((res) => {
         if (res.data.insertedId) {
-          toast.success("Book added Add To Read List.");
+          toast.success("Book added to Want To Read list.");
+        } else {
+          toast(res.data);
+        }
+      })
+      .catch((error) => console.log(error));
+  };
+  const handleCurrentlyReading = async () => {
+    const bookDetails = {
+      bookId: id,
+      username: user.name,
+      email: user.email,
+    };
+    await axiosSecure
+      .post(`/shelf/currently-reading`, bookDetails)
+      .then((res) => {
+        if (res.data.insertedId) {
+          toast.success("Book added to Currently Reading list.");
+        } else {
+          toast(res.data);
+        }
+      })
+      .catch((error) => console.log(error));
+  };
+  const handleRead = async () => {
+    const bookDetails = {
+      bookId: id,
+      username: user.name,
+      email: user.email,
+    };
+    await axiosSecure
+      .post(`/shelf/read`, bookDetails)
+      .then((res) => {
+        if (res.data.insertedId) {
+          toast.success("Book added to Read list.");
         } else {
           toast(res.data);
         }
@@ -68,28 +106,74 @@ const BookDetails = () => {
             <p className="text-gray-600 leading-relaxed">{book.description}</p>
           </div>
 
-          {/* Shelf Buttons */}
           <div>
             <p className="font-semibold mb-2">Add to Shelf:</p>
             <div className="flex flex-wrap gap-3">
               <button
-                onClick={handleAddToShelf}
+                onClick={handleWantToRead}
                 className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
                 Want to Read
               </button>
 
               <button
-                // onClick={() => handleAddToShelf("Currently Reading")}
+                onClick={handleCurrentlyReading}
                 className="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition">
                 Currently Reading
               </button>
 
               <button
-                // onClick={() => handleAddToShelf("Read")}
+                onClick={handleRead}
                 className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition">
                 Read
               </button>
             </div>
+          </div>
+        </div>
+      </div>
+      <div className="space-y-4">
+        {book?.reviews?.map((review) => (
+          <div className="mt-8" key={review.userEmail}>
+            <div className="flex gap-5 items-center">
+              <img
+                className="w-12 h-12 rounded-full"
+                src="https://i.ibb.co.com/G3RSZkPh/robi.png"
+                alt=""
+              />
+              <div className="flex flex-col">
+                <div className="flex">
+                  <p className="text-gray-400">By </p>{" "}
+                  <h4>
+                    {review.userName}{" "}
+                    <span className="text-gray-400">{review?.date}</span>
+                  </h4>
+                </div>
+                <div>
+                  <Rating
+                    readonly
+                    initialRating={review.rating}
+                    emptySymbol={<CiStar fill="#ff9900" stroke="#ff9900" />}
+                    fullSymbol={<FaStar fill="#ff9900" stroke="#ff9900" />}
+                    fractions={2}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="mt-3">
+              <h2>{review?.comment}</h2>
+              <span className="mt-3 text-gray-400">
+                Was this review helpful to you?
+              </span>
+            </div>
+          </div>
+        ))}
+        <div className="flex flex-col">
+          <textarea
+            name=""
+            id=""
+            placeholder="write a review"
+            className="border outline-none w-full md:w-2/6 px-4 py-2"></textarea>
+          <div className="md:w-2/6 mt-2 flex justify-end">
+            <button className="btn bg-[#ff9900] w-full md:w-fit">Submit</button>
           </div>
         </div>
       </div>

@@ -5,7 +5,7 @@ const BookCard = ({ book }) => {
     <div className="px-2 bg-white rounded-xl shadow-sm hover:shadow-md transition overflow-hidden">
       {/* Cover */}
       <h3 className="font-semibold line-clamp-2">
-        {book.title.slice(0, 30)}...
+        {book?.title?.slice(0, 30)}...
       </h3>
       <img
         src={book.cover}
@@ -18,7 +18,7 @@ const BookCard = ({ book }) => {
 
         <div className="flex items-center justify-between mt-2">
           <span className="text-xs bg-indigo-100 text-indigo-600 px-2 py-1 rounded-full space-x-2">
-            {book.genres.map((g) => (
+            {book?.genres?.map((g) => (
               <span key={g}>{g}</span>
             ))}
           </span>

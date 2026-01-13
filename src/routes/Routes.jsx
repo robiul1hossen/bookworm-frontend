@@ -12,6 +12,7 @@ import ManageUsers from "../pages/dashboard/ManageUsers.jsx";
 import AdminRoute from "./AdminRoute.jsx";
 import BrowseBook from "../pages/dashboard/BrowseBook.jsx";
 import BookDetails from "../pages/dashboard/BookDetails.jsx";
+import MyLibrary from "../pages/dashboard/MyLibrary.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -69,6 +70,10 @@ export const router = createBrowserRouter([
       {
         path: "/book/details/:id",
         element: <BookDetails />,
+      },
+      {
+        path: "/user/my-library",
+        element: <MyLibrary />,
       },
     ],
   },
