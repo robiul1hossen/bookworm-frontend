@@ -1,19 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
+import {
+  FaArrowLeft,
+  FaArrowRight,
+  FaEdit,
+  FaEye,
+  FaTrash,
+} from "react-icons/fa";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
 
 const ManageBooks = () => {
   const axiosSecure = useAxiosSecure();
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
   const { data: books = [], refetch } = useQuery({
-    queryKey: ["books"],
+    queryKey: ["books", page, search],
     queryFn: async () => {
-      const res = await axiosSecure.get("/books");
+      const res = await axiosSecure.get("/books", {
+        params: {
+          page,
+          limit: 10,
+          search,
+        },
+      });
       return res.data;
     },
   });
+  const totalPages = books.totalPage || 0;
+  console.log(books.result);
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -40,6 +56,17 @@ const ManageBooks = () => {
   };
   return (
     <div className="overflow-x-auto">
+      <div>
+        <input
+          onChange={(e) => {
+            setSearch(e.target.value);
+            setPage(1);
+          }}
+          type="text"
+          placeholder="Search books..."
+          className="input outline-none text-end"
+        />
+      </div>
       <table className="table table-zebra">
         {/* head */}
         <thead>
@@ -54,7 +81,7 @@ const ManageBooks = () => {
         </thead>
         <tbody>
           {/* row 1 */}
-          {books.map((book, i) => (
+          {books?.result?.map((book, i) => (
             <tr key={book._id}>
               <th>{i + 1}</th>
               <td>{book.title}</td>
@@ -92,6 +119,37 @@ const ManageBooks = () => {
           ))}
         </tbody>
       </table>
+      <div className="flex justify-center mt-6">
+        <div className="join">
+          <button
+            className=""
+            onClick={() => setPage(page - 1)}
+            disabled={page === 1}>
+            <FaArrowLeft className="mx-2" />
+          </button>
+
+          {Array.from({ length: totalPages || 0 }, (_, i) => i + 1).map(
+            (pageNum) => (
+              <button
+                key={pageNum}
+                onClick={() => setPage(pageNum)}
+                className={` mx-2 ${
+                  pageNum === page
+                    ? "bg-[#B13BFF] text-white btn btn-xs"
+                    : "btn btn-outline hover:bg-[#B13BFF] hover:text-white btn-xs"
+                }`}>
+                {pageNum}
+              </button>
+            )
+          )}
+          <button
+            className=""
+            onClick={() => setPage(page + 1)}
+            disabled={page === totalPages}>
+            <FaArrowRight className="mx-2" />
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

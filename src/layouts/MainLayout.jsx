@@ -201,6 +201,16 @@ const MainLayout = () => {
                     </span>
                   </button>
                 </NavLink>
+                <NavLink to="/user/my-library" className="cursor-pointer">
+                  <button
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="My Library">
+                    <span className="flex items-center justify-center gap-1">
+                      <FaUsers size={16} />
+                      <span className="is-drawer-close:hidden">My Library</span>
+                    </span>
+                  </button>
+                </NavLink>
               </div>
             )}
           </ul>

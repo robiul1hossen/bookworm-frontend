@@ -19,7 +19,7 @@ const BookCard = ({ book }) => {
         <div className="flex items-center justify-between mt-2">
           <span className="text-xs bg-indigo-100 text-indigo-600 px-2 py-1 rounded-full space-x-2">
             {book.genres.map((g) => (
-              <span>{g}</span>
+              <span key={g}>{g}</span>
             ))}
           </span>
 
@@ -29,7 +29,7 @@ const BookCard = ({ book }) => {
         </div>
 
         {/* Action */}
-        <Link to={`/books/${book._id}`}>
+        <Link to={`/book/details/${book._id}`}>
           <button className="mt-3 w-full bg-indigo-600 hover:bg-indigo-700 text-white text-sm py-2 rounded-lg transition">
             View Details
           </button>

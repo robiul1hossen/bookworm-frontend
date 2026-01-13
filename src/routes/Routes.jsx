@@ -11,6 +11,7 @@ import CreateBook from "../pages/dashboard/CreateBook.jsx";
 import ManageUsers from "../pages/dashboard/ManageUsers.jsx";
 import AdminRoute from "./AdminRoute.jsx";
 import BrowseBook from "../pages/dashboard/BrowseBook.jsx";
+import BookDetails from "../pages/dashboard/BookDetails.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -31,7 +32,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/admin/manage-books",
-        element: <ManageBooks />,
+        element: (
+          <AdminRoute>
+            <ManageBooks />
+          </AdminRoute>
+        ),
       },
       {
         path: `/admin/update/:id`,
@@ -58,8 +63,12 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/user/browse-book",
+        path: "user/browse-book",
         element: <BrowseBook />,
+      },
+      {
+        path: "/book/details/:id",
+        element: <BookDetails />,
       },
     ],
   },

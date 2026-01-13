@@ -67,7 +67,9 @@ const BrowseBook = () => {
                 Select Genre
               </option>
               {newAllGenres.map((gen) => (
-                <option value={gen}>{gen}</option>
+                <option value={gen} key={gen}>
+                  {gen}
+                </option>
               ))}
             </select>
           </fieldset>
