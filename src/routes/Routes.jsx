@@ -2,7 +2,6 @@ import { createBrowserRouter } from "react-router";
 import MainLayout from "../layouts/MainLayout.jsx";
 import AuthLayout from "../layouts/AuthLayout";
 import Login from "../pages/shared/Login/Login";
-import Register from "../pages/shared/register/register";
 import ManageGenres from "../pages/dashboard/ManageGenres";
 import PrivateRoute from "./PrivateRoute";
 import ManageBooks from "../pages/dashboard/ManageBooks.jsx";
@@ -15,6 +14,7 @@ import BookDetails from "../pages/dashboard/BookDetails.jsx";
 import MyLibrary from "../pages/dashboard/MyLibrary.jsx";
 import ModerateReviews from "../pages/dashboard/ModerateReviews.jsx";
 import Home from "../pages/Home.jsx";
+import Register from "../pages/shared/Register/Register.jsx";
 
 export const router = createBrowserRouter([
   {
