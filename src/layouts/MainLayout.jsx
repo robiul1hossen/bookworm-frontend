@@ -5,6 +5,7 @@ import { MdReviews } from "react-icons/md";
 import { FaHome, FaUsers, FaVideo } from "react-icons/fa";
 import { TbLayoutSidebarRightCollapseFilled } from "react-icons/tb";
 import { useAuth } from "../hooks/useAuth";
+import AdminHome from "../pages/dashboard/AdminHome";
 
 const MainLayout = () => {
   const { user, logout } = useAuth();
@@ -57,7 +58,7 @@ const MainLayout = () => {
             </div>
           </div>
         </nav>
-        {/* Page content here */}
+
         <Outlet />
       </div>
 

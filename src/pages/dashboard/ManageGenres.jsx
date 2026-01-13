@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useRef, useState } from "react";
+import moment from "moment/moment";
 
 const ManageGenres = () => {
   const axiosSecure = useAxiosSecure();
@@ -21,6 +22,12 @@ const ManageGenres = () => {
     handleSubmit,
     reset,
     formState: { errors },
+  } = useForm();
+  const {
+    register: registerAdd,
+    handleSubmit: handleSubmitAdd,
+    reset: resetAdd,
+    formState: { errors: errorsAdd },
   } = useForm();
   const handleDelete = async (id) => {
     Swal.fire({
@@ -45,22 +52,11 @@ const ManageGenres = () => {
       }
     });
   };
-  const handleAddGenre = (data) => {
-    axiosSecure
-      .post("/genres", data)
-      .then((res) => {
-        if (res.data.insertedId) {
-          toast.success("Genre added to list.");
-          refetch();
-        }
-      })
-      .catch((error) => console.log(error));
-  };
+
   const handleEditGenre = (genre) => {
     editGenreModalRef.current.showModal();
     setSelectedGenre(genre);
   };
-  console.log(selectGenre);
   const handleUpdateGenre = (data) => {
     console.log(data);
     axiosSecure
@@ -68,6 +64,8 @@ const ManageGenres = () => {
       .then((res) => {
         console.log(res.data);
         if (res.data.modifiedCount) {
+          refetch();
+          reset();
           toast.success("Genre updated!");
           editGenreModalRef?.current?.close();
         }
@@ -77,23 +75,40 @@ const ManageGenres = () => {
         console.log(error);
       });
   };
-  console.log(selectGenre.name);
+  const handleAddGenre = async (data) => {
+    const info = {
+      name: data.name,
+      date: new Date(),
+    };
+    await axiosSecure
+      .post("/genres", info)
+      .then((res) => {
+        if (res.data.insertedId) {
+          toast.success("Genre added to list.");
+          refetch();
+          resetAdd();
+        }
+      })
+      .catch((error) => console.log(error));
+  };
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
       <div className="justify-items-end ">
-        <form onSubmit={handleSubmit(handleAddGenre)} className="flex gap-2">
+        <form onSubmit={handleSubmitAdd(handleAddGenre)} className="flex gap-2">
           <div className="w-full md:w-1/2">
             <input
-              {...register("name", { required: true })}
               type="text"
               className="input outline-none w-full px-2"
+              {...registerAdd("name", { required: true })}
             />
-            {errors.name && (
+            {errorsAdd.name && (
               <span className="text-xs text-red-500">Genre is required</span>
             )}
           </div>
           <div>
-            <button className="btn btn-primary">Add Genre</button>
+            <button type="submit" className="btn bg-white shadow-sm">
+              Add Genre
+            </button>
           </div>
         </form>
       </div>
@@ -105,8 +120,9 @@ const ManageGenres = () => {
             <tr>
               <th></th>
               <th>Name</th>
-              <th>Action</th>
-              <th>Favorite Color</th>
+              <th>Date</th>
+              <th>Edit</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -115,21 +131,23 @@ const ManageGenres = () => {
               <tr key={gen._id}>
                 <th>{i + 1}</th>
                 <td>{gen.name}</td>
+                <td>{moment(gen?.date).format("DD MM YYYY")}</td>
                 <td>
                   <div>
                     <button
                       onClick={() => handleEditGenre(gen)}
-                      className="btn btn-primary">
+                      className="btn bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition">
                       Edit
-                    </button>
-                    <button
-                      onClick={() => handleDelete(gen._id)}
-                      className="btn btn-secondary">
-                      Delete
                     </button>
                   </div>
                 </td>
-                <td>Blue</td>
+                <td>
+                  <button
+                    onClick={() => handleDelete(gen._id)}
+                    className="btn bg-green-600 text-white rounded-md hover:bg-green-700 transition">
+                    Delete
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -160,13 +178,12 @@ const ManageGenres = () => {
                 )}
               </div>
               <div>
-                <button className="btn btn-primary">Update Genre</button>
+                <button className="btn bg-white shadow-sm">Update Genre</button>
               </div>
             </form>
           </div>
           <div className="modal-action">
             <form method="dialog">
-              {/* if there is a button in form, it will close the modal */}
               <button className="btn">Close</button>
             </form>
           </div>

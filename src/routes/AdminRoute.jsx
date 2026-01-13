@@ -4,7 +4,6 @@ import { Navigate } from "react-router";
 
 const AdminRoute = ({ children }) => {
   const { user, loading, logout } = useAuth();
-  console.log(user, loading);
 
   if (loading) return <Loader />;
 

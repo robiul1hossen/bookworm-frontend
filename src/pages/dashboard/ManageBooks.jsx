@@ -111,9 +111,11 @@ const ManageBooks = () => {
                   className="btn btn-xs px-2">
                   <FaTrash size={14} />
                 </button>
-                <button className="btn btn-xs px-2">
-                  <FaEye size={14} />
-                </button>
+                <Link to={`/book/details/${book._id}`}>
+                  <button className="btn btn-xs px-2">
+                    <FaEye size={14} />
+                  </button>
+                </Link>
               </td>
             </tr>
           ))}

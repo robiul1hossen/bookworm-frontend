@@ -13,6 +13,8 @@ import AdminRoute from "./AdminRoute.jsx";
 import BrowseBook from "../pages/dashboard/BrowseBook.jsx";
 import BookDetails from "../pages/dashboard/BookDetails.jsx";
 import MyLibrary from "../pages/dashboard/MyLibrary.jsx";
+import ModerateReviews from "../pages/dashboard/ModerateReviews.jsx";
+import Home from "../pages/Home.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -23,6 +25,10 @@ export const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
+      {
+        index: true,
+        element: <Home />,
+      },
       {
         path: "admin/manage-genres",
         element: (
@@ -60,6 +66,14 @@ export const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <ManageUsers />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "admin/moderate-reviews",
+        element: (
+          <AdminRoute>
+            <ModerateReviews />
           </AdminRoute>
         ),
       },

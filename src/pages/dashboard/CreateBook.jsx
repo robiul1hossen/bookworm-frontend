@@ -183,8 +183,8 @@ const CreateBook = () => {
               ))}
             </div>
           </div>
-          <div className="px-4 mt-6">
-            <button className="btn btn-primary">Add A Book</button>
+          <div className="px-4 my-6">
+            <button className="btn bg-white shadow-sm">Add A Book</button>
           </div>
         </form>
       </div>

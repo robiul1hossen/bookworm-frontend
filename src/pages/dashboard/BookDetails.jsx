@@ -5,11 +5,15 @@ import { useAuth } from "../../hooks/useAuth";
 import { toast } from "react-toastify";
 import Rating from "react-rating";
 import { CiStar } from "react-icons/ci";
-import { FaStar } from "react-icons/fa";
+import { FaRegThumbsDown, FaRegThumbsUp, FaStar } from "react-icons/fa";
+import { useState } from "react";
+import moment from "moment";
 
 const BookDetails = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
+  const [rating, setRating] = useState(0);
+  const [reviewText, setReviewText] = useState("");
   const { user } = useAuth();
   const { data: book = {} } = useQuery({
     queryKey: ["book-details", id],
@@ -18,7 +22,6 @@ const BookDetails = () => {
       return res.data;
     },
   });
-  console.log(book);
 
   const handleWantToRead = async () => {
     const bookDetails = {
@@ -72,9 +75,36 @@ const BookDetails = () => {
       .catch((error) => console.log(error));
   };
 
+  const handleChange = (e) => {
+    const review = e.target.value;
+    setReviewText(review);
+  };
+  console.log(user);
+  const handleReview = (e) => {
+    e.preventDefault();
+    const reviewData = {
+      rating: rating,
+      comment: reviewText,
+      name: user.name,
+      email: user.email,
+      photoURL: user.photoURL,
+      date: new Date(),
+      status: "pending",
+    };
+
+    axiosSecure
+      .patch(`/books/review/${id}`, reviewData)
+      .then(() => {
+        toast.success("Your review is pending for admin's approval");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div className="max-w-5xl mx-auto my-10 p-6">
-      <div className="flex flex-col md:flex-row gap-8">
+      <div className="flex flex-col md:flex-row gap-8 mb-6">
         {/* Book Cover */}
         <img
           src={book.cover}
@@ -133,48 +163,86 @@ const BookDetails = () => {
       <div className="space-y-4">
         {book?.reviews?.map((review) => (
           <div className="mt-8" key={review.userEmail}>
-            <div className="flex gap-5 items-center">
-              <img
-                className="w-12 h-12 rounded-full"
-                src="https://i.ibb.co.com/G3RSZkPh/robi.png"
-                alt=""
-              />
-              <div className="flex flex-col">
-                <div className="flex">
-                  <p className="text-gray-400">By </p>{" "}
-                  <h4>
-                    {review.userName}{" "}
-                    <span className="text-gray-400">{review?.date}</span>
-                  </h4>
-                </div>
-                <div>
-                  <Rating
-                    readonly
-                    initialRating={review.rating}
-                    emptySymbol={<CiStar fill="#ff9900" stroke="#ff9900" />}
-                    fullSymbol={<FaStar fill="#ff9900" stroke="#ff9900" />}
-                    fractions={2}
+            {review.status === "approved" ? (
+              <>
+                <div className="flex gap-5 items-center">
+                  <img
+                    className="w-12 h-12 rounded-full object-cover"
+                    src={review.photoURL}
+                    alt=""
                   />
+                  <div className="flex flex-col">
+                    <div className="flex">
+                      <p className="text-gray-400">By </p>
+                      <h4>
+                        {review.name}{" "}
+                        <span className="text-gray-400">
+                          {moment(review.date).format("DD MM YYYY")}
+                        </span>
+                      </h4>
+                    </div>
+                    <div>
+                      <Rating
+                        readonly
+                        initialRating={review.rating}
+                        emptySymbol={<CiStar fill="#ff9900" stroke="#ff9900" />}
+                        fullSymbol={<FaStar fill="#ff9900" stroke="#ff9900" />}
+                        fractions={2}
+                      />
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div className="mt-3">
-              <h2>{review?.comment}</h2>
-              <span className="mt-3 text-gray-400">
-                Was this review helpful to you?
-              </span>
-            </div>
+                <div className="mt-3">
+                  <h2 className="mb-3">{review?.comment}</h2>
+                  <span className="mt-5 text-gray-400">
+                    Was this review helpful to you?
+                  </span>
+                </div>
+                <div className="flex gap-3 mt-6">
+                  <button className="btn bg-white shadow-sm rounded-lg text-gray-500">
+                    <FaRegThumbsUp /> Helpful
+                  </button>
+                  <button className="btn bg-white shadow-sm rounded-lg text-gray-500">
+                    <FaRegThumbsDown /> Not Helpful
+                  </button>
+                </div>
+              </>
+            ) : (
+              <></>
+            )}
           </div>
         ))}
-        <div className="flex flex-col">
-          <textarea
-            name=""
-            id=""
-            placeholder="write a review"
-            className="border outline-none w-full md:w-2/6 px-4 py-2"></textarea>
-          <div className="md:w-2/6 mt-2 flex justify-end">
-            <button className="btn bg-[#ff9900] w-full md:w-fit">Submit</button>
-          </div>
+        <div className="flex flex-col mt-10">
+          <form onSubmit={(e) => handleReview(e)}>
+            <div>
+              <h2>Add a Rating</h2>
+              <Rating
+                initialRating={rating}
+                onChange={(value) => setRating(value)}
+                emptySymbol={
+                  <CiStar size={16} fill="#ff9900" stroke="#ff9900" />
+                }
+                fullSymbol={
+                  <FaStar size={16} fill="#ff9900" stroke="#ff9900" />
+                }
+                fractions={2}
+              />
+            </div>
+            <textarea
+              onChange={handleChange}
+              value={reviewText}
+              name=""
+              id=""
+              placeholder="write a review"
+              className="border outline-none w-full md:w-2/6 px-4 py-2"></textarea>
+            <div className="md:w-2/6 mt-2 flex justify-end">
+              <button
+                type="submit"
+                className="btn bg-white shadow-sm w-full md:w-fit">
+                Submit
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

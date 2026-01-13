@@ -30,7 +30,7 @@ const BookCard = ({ book }) => {
 
         {/* Action */}
         <Link to={`/book/details/${book._id}`}>
-          <button className="mt-3 w-full bg-indigo-600 hover:bg-indigo-700 text-white text-sm py-2 rounded-lg transition">
+          <button className="mt-3 w-full btn bg-white shadow-sm  text-sm py-2 rounded-lg transition">
             View Details
           </button>
         </Link>
