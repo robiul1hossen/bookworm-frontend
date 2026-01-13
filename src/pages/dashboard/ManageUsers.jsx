@@ -38,7 +38,7 @@ const ManageUsers = () => {
             <th>Email</th>
             <th>CreatedAt</th>
             <th>Role</th>
-            <th>Actions</th>
+            <th>Update Role</th>
           </tr>
         </thead>
         <tbody>
@@ -66,8 +66,8 @@ const ManageUsers = () => {
                     value={user?.role || ""}
                     className="select w-1/2 outline-none">
                     <option disabled>Pick a Role</option>
-                    <option value="admin">Make Admin</option>
-                    <option value="user">Make User</option>
+                    <option value="admin">Admin</option>
+                    <option value="user">User</option>
                   </select>
                 </div>
               </td>

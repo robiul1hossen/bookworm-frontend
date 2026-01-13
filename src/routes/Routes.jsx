@@ -9,6 +9,8 @@ import ManageBooks from "../pages/dashboard/ManageBooks.jsx";
 import EditBook from "../pages/dashboard/EditBook.jsx";
 import CreateBook from "../pages/dashboard/CreateBook.jsx";
 import ManageUsers from "../pages/dashboard/ManageUsers.jsx";
+import AdminRoute from "./AdminRoute.jsx";
+import BrowseBook from "../pages/dashboard/BrowseBook.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -21,7 +23,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "admin/manage-genres",
-        element: <ManageGenres />,
+        element: (
+          <AdminRoute>
+            <ManageGenres />
+          </AdminRoute>
+        ),
       },
       {
         path: "/admin/manage-books",
@@ -29,15 +35,31 @@ export const router = createBrowserRouter([
       },
       {
         path: `/admin/update/:id`,
-        element: <EditBook />,
+        element: (
+          <AdminRoute>
+            <EditBook />
+          </AdminRoute>
+        ),
       },
       {
         path: "admin/manage-books/create",
-        element: <CreateBook />,
+        element: (
+          <AdminRoute>
+            <CreateBook />
+          </AdminRoute>
+        ),
       },
       {
         path: "admin/manage-users",
-        element: <ManageUsers />,
+        element: (
+          <AdminRoute>
+            <ManageUsers />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/user/browse-book",
+        element: <BrowseBook />,
       },
     ],
   },
