@@ -23,7 +23,8 @@ const MainLayout = () => {
             aria-label="open sidebar"
             className="btn btn-square btn-ghost">
             {/* Sidebar toggle icon */}
-            <TbLayoutSidebarRightCollapseFilled size={20} />
+            {/* <TbLayoutSidebarRightCollapseFilled size={20} /> */}
+            <img src="/hamburger.svg" className="w-5 h-5" alt="" />
           </label>
           <div className="flex justify-between items-center w-full list-none">
             <div className="px-4 font-bold text-xl md:text-2xl">BOOKWORM</div>
@@ -80,7 +81,8 @@ const MainLayout = () => {
                   data-tip="Homepage">
                   {/* Home icon */}
                   <span className="flex items-center justify-center gap-1">
-                    <FaHome size={16} />
+                    <img src="/home.svg" className="w-5 h-5" alt="" />
+
                     <span className="is-drawer-close:hidden">Homepage</span>
                   </span>
                 </button>
@@ -94,7 +96,7 @@ const MainLayout = () => {
                       className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                       data-tip="Manage Genres">
                       <span className="flex items-center justify-center gap-1">
-                        <BiSolidCategory size={16} />
+                        <img src="/category.svg" className="w-5 h-5" alt="" />
                         <span className="is-drawer-close:hidden">
                           Manage Genres
                         </span>
@@ -110,7 +112,7 @@ const MainLayout = () => {
                       <NavLink
                         to="/admin/manage-books"
                         className="flex items-center gap-2 w-full">
-                        <IoBookSharp size={16} />
+                        <img src="/book.svg" className="w-5 h-5" alt="" />
                         <span className="is-drawer-close:hidden">
                           Manage Books
                         </span>
@@ -153,7 +155,7 @@ const MainLayout = () => {
                       className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                       data-tip="Moderate Reviews">
                       <span className="flex items-center justify-center gap-1">
-                        <MdReviews size={16} />
+                        <img src="/review.svg" className="w-7 h-7" alt="" />
                         <span className="is-drawer-close:hidden">
                           Moderate Reviews
                         </span>
@@ -167,7 +169,7 @@ const MainLayout = () => {
                       className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                       data-tip="Manage Tutorials">
                       <span className="flex items-center justify-center gap-1">
-                        <FaVideo size={16} />
+                        <img src="/video.svg" className="w-7 h-7" alt="" />
                         <span className="is-drawer-close:hidden">
                           Manage Tutorials
                         </span>
@@ -181,7 +183,7 @@ const MainLayout = () => {
                       className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                       data-tip="User Management">
                       <span className="flex items-center justify-center gap-1">
-                        <FaUsers size={16} />
+                        <img src="/users.svg" className="w-5 h-5" alt="" />
                         <span className="is-drawer-close:hidden">
                           Manage Users
                         </span>
@@ -197,7 +199,7 @@ const MainLayout = () => {
                     className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                     data-tip="Browse Book">
                     <span className="flex items-center justify-center gap-1">
-                      <FaUsers size={16} />
+                      <img src="/books.svg" className="w-5 h-5" alt="" />
                       <span className="is-drawer-close:hidden">
                         Browse Book
                       </span>
@@ -209,7 +211,7 @@ const MainLayout = () => {
                     className="is-drawer-close:tooltip is-drawer-close:tooltip-right cursor-pointer"
                     data-tip="My Library">
                     <span className="flex items-center justify-center gap-1">
-                      <FaUsers size={16} />
+                      <img src="/library2.svg" className="w-4 h-4" alt="" />
                       <span className="is-drawer-close:hidden">My Library</span>
                     </span>
                   </button>

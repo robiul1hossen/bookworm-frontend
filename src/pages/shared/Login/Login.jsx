@@ -2,8 +2,14 @@ import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router";
 import { useAuth } from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { toast } from "react-toastify";
+import { useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 const Login = () => {
   const { login } = useAuth();
+  const [demoEmail, setDemoEmail] = useState("");
+  const [demoPass, setDemoPass] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const axiosSecure = useAxiosSecure();
   const {
     register,
@@ -17,12 +23,27 @@ const Login = () => {
       email: data.email,
       password: data.password,
     };
-    const res = await axiosSecure.post("/user/login", userData);
-    login(res.data.token, res.data.user);
-    console.log(res.data.user.id);
-    if (res.data.user.id) {
-      navigate(`${location?.state?.from ? location?.state?.from : "/"}`);
+    try {
+      const res = await axiosSecure.post("/user/login", userData);
+      login(res.data.token, res.data.user);
+      if (res.data.user.id) {
+        navigate(`${location?.state?.from ? location?.state?.from : "/"}`);
+      }
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
     }
+  };
+
+  const handleLoginAsAdmin = () => {
+    setDemoEmail("admin@gmail.com");
+    setDemoPass("123456aA");
+  };
+  const handleLoginAsUser = () => {
+    setDemoEmail("user@gmail.com");
+    setDemoPass("123456aA");
+  };
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -35,27 +56,34 @@ const Login = () => {
               <label className="label text-white">Email</label>
               <input
                 type="email"
-                //   defaultValue={demoEmail}
-                {...register("email", { required: true })}
-                className="input outline-none w-full shadow-xl"
+                defaultValue={demoEmail}
                 placeholder="Email"
+                className="input outline-none w-full shadow-xl"
+                {...register("email", { required: true })}
               />
               {errors.email && (
                 <span className="text-xs text-red-500">Email is required</span>
               )}
-              <label className="label text-white">Password</label>
-              <input
-                type="password"
-                //   defaultValue={demoPass}
-                {...register("password", { required: true })}
-                className="input outline-none w-full shadow-xl"
-                placeholder="Password"
-              />
-              {errors.password && (
-                <span className="text-xs text-red-500">
-                  Password is required
+              <div className="relative">
+                <label className="label text-white">Password</label>
+                <input
+                  type={showPassword === true ? "text" : "password"}
+                  defaultValue={demoPass}
+                  placeholder="Password"
+                  className="input outline-none w-full shadow-xl"
+                  {...register("password", { required: true })}
+                />
+                <span
+                  onClick={() => handleShowPassword(showPassword)}
+                  className="absolute top-7.5 right-2.5">
+                  {showPassword === true ? <FaEyeSlash /> : <FaEye />}
                 </span>
-              )}
+                {errors.password && (
+                  <span className="text-xs text-red-500">
+                    Password is required
+                  </span>
+                )}
+              </div>
               <div>
                 <a className="link link-hover">Forgot password?</a>
               </div>
@@ -72,14 +100,14 @@ const Login = () => {
           </form>
           <div className="flex flex-col md:flex-row gap-4 w-full">
             <button
-              // onClick={handleLoginAsAdmin}
-              className="btn bg-[#471396] border-[#e5e5e5] text-white mt-4">
+              onClick={handleLoginAsAdmin}
+              className="btn bg-white shadow-sm mt-4">
               Demo Login as Admin
             </button>
             <button
-              // onClick={handleLoginAsManager}
-              className="btn bg-[#471396] border-[#e5e5e5] text-white mt-4">
-              Demo Login as Manager
+              onClick={handleLoginAsUser}
+              className="btn bg-white shadow-sm mt-4">
+              Demo Login as User
             </button>
           </div>
         </div>

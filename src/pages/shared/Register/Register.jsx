@@ -1,14 +1,18 @@
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router";
 import { setToken } from "../../../lib/lib";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { toast } from "react-toastify";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Register = () => {
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
@@ -24,7 +28,20 @@ const Register = () => {
     }`;
     axios.post(imageHostingURL, formData).then((res) => {
       const userPhotoURL = res.data?.data?.url;
-      console.log(userPhotoURL);
+
+      const upperCase = /(?=.*[A-Z])/;
+      const lowercase = /(?=.*[a-z])/;
+      const sixCha = /.{6,}/;
+
+      if (!sixCha.test(data.password)) {
+        return toast.error("Password must be at least 6 character");
+      }
+      if (!lowercase.test(data.password)) {
+        return toast.error("Password must be one lowercase");
+      }
+      if (!upperCase.test(data.password)) {
+        return toast.error("Password must be one Uppercase");
+      }
 
       const userInfo = {
         name: data.name,
@@ -44,6 +61,9 @@ const Register = () => {
         })
         .catch((error) => console.log(error));
     });
+  };
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
   };
   return (
     <div>
@@ -69,19 +89,29 @@ const Register = () => {
               className="input outline-none  w-full shadow-xl "
               placeholder="Email"
             />
+
             {errors.email && (
               <span className="text-xs text-red-500">Email is required</span>
             )}
-            <label className="label">Password</label>
-            <input
-              type="password"
-              {...register("password", { required: true })}
-              className="input outline-none w-full shadow-xl "
-              placeholder="Password"
-            />
-            {errors.password && (
-              <span className="text-xs text-red-500">Password is required</span>
-            )}
+            <div className="relative">
+              <label className="label">Password</label>
+              <input
+                type={showPassword === true ? "text" : "password"}
+                {...register("password", { required: true })}
+                className="input outline-none w-full shadow-xl "
+                placeholder="Password"
+              />
+              <span
+                onClick={() => handleShowPassword(showPassword)}
+                className="absolute top-7.5 right-2.5">
+                {showPassword === true ? <FaEyeSlash /> : <FaEye />}
+              </span>
+              {errors.password && (
+                <span className="text-xs text-red-500">
+                  Password is required
+                </span>
+              )}
+            </div>
             <div>
               <a className="link link-hover">Forgot password?</a>
             </div>
