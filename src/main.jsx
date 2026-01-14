@@ -13,7 +13,9 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <RouterProvider router={router} />
+        <div className="bg">
+          <RouterProvider router={router} />
+        </div>
       </AuthProvider>
       <ToastContainer />
     </QueryClientProvider>

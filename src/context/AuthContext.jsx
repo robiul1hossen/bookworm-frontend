@@ -17,15 +17,14 @@ const AuthProvider = ({ children }) => {
       }
 
       try {
-        // const res = await axios.get("http://localhost:3000/user/me", {
-        const res = await axios.get(
-          "https://bookworm-server-five.vercel.app/user/me",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        // const res = await axios.get(
+        //   "https://bookworm-server-five.vercel.app/user/me",
+        //   {
+        const res = await axios.get("http://localhost:3000/user/me", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setUser(res.data.user);
       } catch (err) {
         removeToken();

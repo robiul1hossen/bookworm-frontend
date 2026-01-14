@@ -15,6 +15,7 @@ import MyLibrary from "../pages/dashboard/MyLibrary.jsx";
 import ModerateReviews from "../pages/dashboard/ModerateReviews.jsx";
 import Home from "../pages/Home.jsx";
 import Register from "../pages/shared/Register/Register.jsx";
+import NotFound from "../pages/NotFound.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -89,6 +90,10 @@ export const router = createBrowserRouter([
         path: "/user/my-library",
         element: <MyLibrary />,
       },
+      {
+        path: "*",
+        Component: NotFound,
+      },
     ],
   },
 
@@ -104,6 +109,14 @@ export const router = createBrowserRouter([
         path: "register",
         Component: Register,
       },
+      {
+        path: "*",
+        Component: NotFound,
+      },
     ],
+  },
+  {
+    path: "*",
+    Component: NotFound,
   },
 ]);

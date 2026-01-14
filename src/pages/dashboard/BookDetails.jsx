@@ -103,7 +103,7 @@ const BookDetails = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto my-10 p-6">
+    <div className="max-w-6xl mx-auto px-4 py-6">
       <div className="flex flex-col md:flex-row gap-8 mb-6">
         {/* Book Cover */}
         <img

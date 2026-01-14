@@ -59,7 +59,9 @@ const MainLayout = () => {
           </div>
         </nav>
 
-        <Outlet />
+        <div className="bg-gray-50 min-h-screen">
+          <Outlet />
+        </div>
       </div>
 
       <div className="drawer-side is-drawer-close:overflow-visible">

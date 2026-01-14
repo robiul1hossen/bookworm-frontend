@@ -33,7 +33,7 @@ const AdminHome = () => {
   }, [axiosSecure]);
   console.log(userStats);
   return (
-    <div className="flex gap-5 px-4 py-5 bg-gray-50 min-h-screen">
+    <div className="flex flex-col md:flex-row gap-5 px-4 py-5  min-h-screen">
       <div className="flex-1 w-full h-96 shadow-md">
         <h2 className="font-semibold text-xl text-end">Books Per Genre</h2>
         <ResponsiveContainer>
@@ -46,7 +46,7 @@ const AdminHome = () => {
           </BarChart>
         </ResponsiveContainer>
       </div>
-      <div className="bg-white p-4 rounded-lg shadow-md flex-1 w-full h-96">
+      <div className=" p-4 rounded-lg shadow-md flex-1 w-full h-96">
         <h2 className="font-semibold text-xl text-end">
           User Registration Per Day
         </h2>
